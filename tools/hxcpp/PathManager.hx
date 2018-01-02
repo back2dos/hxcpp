@@ -84,7 +84,17 @@ class PathManager
       
       return path;
    }
-
+   static var hasHaxeShim(get, null):Bool;
+      static function get_hasHaxeShim() {
+         if (hasHaxeShim == null)
+            hasHaxeShim = try {
+               StringTools.trim(ProcessManager.runProcess('.', 'haxe', ['--run', 'resolve-args'], true, false)) == '';
+            }
+            catch (e:Dynamic) {
+               false;
+            }
+         return hasHaxeShim;
+      }
    public static function getHaxelib (haxelib:String, version:String = "", validate:Bool = true, clearCache:Bool = false):String
    {   
       var name = haxelib;
@@ -106,7 +116,11 @@ class PathManager
          
          try
          {
-            output = ProcessManager.runProcess(Sys.getEnv ("HAXEPATH"), "haxelib", [ "path", name ], true, false);
+            output = 
+               if (hasHaxeShim) 
+                  ProcessManager.runProcess('.', "haxe", [ "--run", "resolve-args", "-lib", "hxcpp" ], true, false);
+               else 
+                  ProcessManager.runProcess(Sys.getEnv ("HAXEPATH"), "haxelib", [ "path", name ], true, false);
          }
          catch (e:Dynamic) {}
          
