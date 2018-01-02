@@ -88,7 +88,7 @@ class PathManager
       static function get_hasHaxeShim() {
          if (hasHaxeShim == null)
             hasHaxeShim = try {
-               StringTools.trim(ProcessManager.runProcess('.', 'haxe', ['--run', 'resolve-args'], true, false)) == '';
+               ProcessManager.runProcess('.', 'haxe', ['--run', 'resolve-args'], true, false).indexOf('Could not process argument resolve-args') == -1;
             }
             catch (e:Dynamic) {
                false;
