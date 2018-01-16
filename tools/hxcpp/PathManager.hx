@@ -118,7 +118,7 @@ class PathManager
          {
             output = 
                if (hasHaxeShim) 
-                  ProcessManager.runProcess('.', "haxe", [ "--run", "resolve-args", "-lib", "hxcpp" ], true, false);
+                  ProcessManager.runProcess('.', "haxe", [ "--run", "resolve-args", "-lib", name ], true, false);
                else 
                   ProcessManager.runProcess(Sys.getEnv ("HAXEPATH"), "haxelib", [ "path", name ], true, false);
          }
