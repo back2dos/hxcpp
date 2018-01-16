@@ -1,5 +1,7 @@
 import sys.FileSystem;
 
+using StringTools;
+
 class PathManager
 {
    private static var directoryCache = new Map<String,Bool>();
@@ -118,7 +120,8 @@ class PathManager
          {
             output = 
                if (hasHaxeShim) 
-                  ProcessManager.runProcess('.', "haxe", [ "--run", "resolve-args", "-lib", name ], true, false);
+                  ProcessManager.runProcess('.', "haxe", [ "--run", "resolve-args", "-lib", name ], true, false)
+                      .replace('-D\n', '-D ');
                else 
                   ProcessManager.runProcess(Sys.getEnv ("HAXEPATH"), "haxelib", [ "path", name ], true, false);
          }
@@ -133,7 +136,7 @@ class PathManager
          {
             if (re.match(StringTools.trim(lines[i])))
             {
-               result = StringTools.trim(lines[i - 1]);
+               result = StringTools.trim(lines[i + (hasHaxeShim ? 2 : -1)]);
             }
          }
          
