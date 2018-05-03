@@ -8,7 +8,7 @@
   "releasenote": "See Changes.md",
   "contributors": ["gamehaxe"],
   "binaryversion": 48,
-  "postDownload": "cd tools/hxcpp lix download && haxe compile.hxml",
+  "postDownload": "cd tools/hxcpp && lix download && haxe compile.hxml",
   "dependencies": {
 
   }
